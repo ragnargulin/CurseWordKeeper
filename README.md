@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Curse Word Keeper
 
-## Getting Started
+This is a small fullstack Next.js app with End-to-End testing. I've built this app to help people keep track of their curse words. I've also utilized a bad-words filter to make sure the words that gets added are actual curse words
 
-First, run the development server:
+The project is tested with Cypress E2E tests, including both success and failure cases.
+
+## User flows
+Flow 1. Input curse word -> press "add" -> curse word gets saved to database
+Flow 2: User wants to remove a word -> finds and presses "remove" button -> word gets removed from database
+Flow 3: User inputs a word that isn't a curse word -> App responds with an error message
+
+## Features
+- Add a new curse word
+- Delete curse words
+- Data stored in a Prisma + SQLite database
+- Automated E2E tests with Cypress
+- Reset/seed database endpoint for consistent test runs
+
+## Tech Stack
+- Next.js (App Router)
+- Prisma (SQLite)
+- Cypress
+
+## Installation
+Clone the repo and install dependencies:
+
+```bash
+git clone <https://github.com/ragnargulin/CurseWordKeeper>
+cd cursewordkeeper
+npm install
+```
+### Running the App
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Running Tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+First, start the dev server in one terminal:
 
-## Learn More
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Then, in another terminal, open Cypress:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npx cypress open
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This will launch the Cypress test runner, where you can run all tests.
+Database is reset before each test using a custom /api/flush endpoint.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Reflection
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+During this assignment, I learned how to combine a simple fullstack app with automated E2E testing. One key challenge was ensuring consistent test data, which I solved by creating a custom `/api/test/flush` endpoint that resets and seeds the database before each test. This allowed my Cypress tests to be reliable and repeatable.  
+
+Another lesson was how important it is to cover both successful and failing user flows. For example, my tests not only check that words can be added and deleted but also verify error cases when invalid input is submitted.  
+
+Compared to the previous unit/integration assignment, I found this project gave me a better understanding of how frontend and backend must work together, and how Cypress can act as a “real user” clicking through the app. In real projects, this approach is useful for catching bugs that only appear in full user journeys, not in isolated unit tests.  
