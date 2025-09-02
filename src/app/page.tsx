@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Filter } from "bad-words";
+const filter = new Filter();
 
 type Word = {
   id: number;
@@ -18,21 +20,26 @@ export default function HomePage() {
       .then((data) => setWords(data));
   }, []);
 
-  // add a new word
-  async function addWord() {
-    if (!newWord.trim()) return;
+async function addWord() {
+  if (!newWord.trim()) return;
 
-    const res = await fetch("/api/words", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: newWord }),
-    });
-
-    const created = await res.json();
-    setWords((prev) => [...prev, created]);
-    setNewWord("");
+  // If it's not a curse word, reject
+  if (!filter.isProfane(newWord)) {
+    alert("That's not a fucking curse word!");
+    return;
   }
 
+  const res = await fetch("/api/words", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: newWord }),
+  });
+  if (res.ok) {
+    const word = await res.json();
+    setWords((prev) => [...prev, word]);
+    setNewWord("");
+  }
+}
   // delete a word
   async function deleteWord(id: number) {
     await fetch(`/api/words/${id}`, { method: "DELETE" });
