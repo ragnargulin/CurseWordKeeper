@@ -5,8 +5,8 @@ This is a small fullstack Next.js app with End-to-End testing. I've built this a
 The project is tested with Cypress E2E tests, including both success and failure cases.
 
 ## User flows
-Flow 1. Input curse word -> press "add" -> curse word gets saved to database\\
-Flow 2: User wants to remove a word -> finds and presses "remove" button -> word gets removed from database\\
+Flow 1. Input curse word -> press "add" -> curse word gets saved to database  
+Flow 2: User wants to remove a word -> finds and presses "remove" button -> word gets removed from database  
 Flow 3: User inputs a word that isn't a curse word -> App responds with an error message
 
 ## Features
